@@ -78,6 +78,20 @@ def create_planet():
 
     return "Planeta guardado"
 
+@app.route('/favorito', methods=['POST'])
+def create_favorito():
+    favorito = Favorito()
+    favorito.name_personajes = request.json.get('name_personajes')
+    favorito.name_vehiculos = request.json.get('name_vehiculos')
+    favorito.name_planetas = request.json.get('name_planetas')
+    favorito.user_email = request.json.get('user_email')
+    
+
+    db.session.add(favorito)
+    db.session.commit()
+
+    return "Favorito guardado"
+
 @app.route('/users/list', methods=['GET'])
 def get_list_user():
     users = User.query.all()
@@ -114,6 +128,15 @@ def get_list_planet():
         result.append(planet.user_planeta())
     return jsonify(result)
 
+@app.route('/favorito/list', methods=['GET'])
+def get_list_favorito():
+    favoritos = Favorito.query.all()
+    result = []
+
+    for favorito in favoritos:
+        result.append(favorito.user_favorite())
+    return jsonify(result)
+
 @app.route('/users/<int:id>', methods=['PUT','DELETE'])
 def update_user(id):
     user = User.query.get(id)
@@ -122,15 +145,87 @@ def update_user(id):
             db.session.delete(user)
             db.session.commit()
 
-            return 204
+            return jsonify(),204
         else:
             user.username = request.json.get('username')
 
             db.session.commit()
 
-            return jsonify('Usuario Actualizado')
+            return jsonify(),200
     
-    return jsonify('Usuario no encontrado')
+    return jsonify(),404
+
+@app.route('/pj/<int:id>', methods=['PUT','DELETE'])
+def update_personaje(id):
+    personaje = Personaje.query.get(id)
+    if personaje is not None:
+        if request.method =='DELETE':
+            db.session.delete(personaje)
+            db.session.commit()
+
+            return jsonify(),204
+        else:
+            personaje.name = request.json.get('name')
+
+            db.session.commit()
+
+            return jsonify(),200
+    
+    return jsonify(),404
+
+@app.route('/ship/<int:id>', methods=['PUT','DELETE'])
+def update_vehiculo(id):
+    vehiculo = Vehiculo.query.get(id)
+    if vehiculo is not None:
+        if request.method =='DELETE':
+            db.session.delete(vehiculo)
+            db.session.commit()
+
+            return jsonify(),204
+        else:
+            vehiculo.name = request.json.get('name')
+
+            db.session.commit()
+
+            return jsonify(),200
+    
+    return jsonify(),404
+
+@app.route('/planet/<int:id>', methods=['PUT','DELETE'])
+def update_planeta(id):
+    planeta = Planeta.query.get(id)
+    if planeta is not None:
+        if request.method =='DELETE':
+            db.session.delete(planeta)
+            db.session.commit()
+
+            return jsonify(),204
+        else:
+            planeta.name = request.json.get('name')
+
+            db.session.commit()
+
+            return jsonify(),200
+    
+    return jsonify(),404
+
+@app.route('/favorito/<int:id>', methods=['PUT','DELETE'])
+def update_favorito(id):
+    favorito = Favorito.query.get(id)
+    if favorito is not None:
+        if request.method =='DELETE':
+            db.session.delete(favorito)
+            db.session.commit()
+
+            return jsonify(),204
+        else:
+            favorito.name_personaje = request.json.get('name_personaje')
+
+            db.session.commit()
+
+            return jsonify(),200
+    
+    return jsonify(),404
 
 with app.app_context():
     db.create_all()

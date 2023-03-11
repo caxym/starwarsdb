@@ -35,9 +35,9 @@ class Favorito(db.Model):
     def user_favorite(self):
         return{
             'id': self.id,
-            'personajes': self.personajes,
-            'vehiculos': self.vehiculos,
-            'planetas': self.planetas
+            'name_personajes': self.name_personajes,
+            'name_vehiculos': self.name_vehiculos,
+            'name_planetas': self.name_planetas
         }
 
 class Personaje(db.Model):
