@@ -101,6 +101,12 @@ def get_list_user():
         result.append(user.user_list())
     return jsonify(result)
 
+@app.route("/users/<int:id>", methods=["GET"])
+def get_oneuser(id):
+    user = User.query.get(id)
+    if user is not None:
+       return jsonify(user.user_list())
+
 @app.route('/pj/list', methods=['GET'])
 def get_list_pj():
     personajes = Personaje.query.all()
@@ -109,6 +115,12 @@ def get_list_pj():
     for personaje in personajes:
         result.append(personaje.user_personaje())
     return jsonify(result)
+
+@app.route("/pj/<int:id>", methods=["GET"])
+def get_onepj(id):
+    pj = Personaje.query.get(id)
+    if pj is not None:
+       return jsonify(pj.user_personaje())
 
 @app.route('/ship/list', methods=['GET'])
 def get_list_ship():
@@ -119,6 +131,12 @@ def get_list_ship():
         result.append(vehiculo.user_vehiculo())
     return jsonify(result)
 
+@app.route("/ship/<int:id>", methods=["GET"])
+def get_oneship(id):
+    vehiculo = Vehiculo.query.get(id)
+    if vehiculo is not None:
+       return jsonify(vehiculo.user_vehiculo())
+
 @app.route('/planet/list', methods=['GET'])
 def get_list_planet():
     planets = Planeta.query.all()
@@ -127,6 +145,12 @@ def get_list_planet():
     for planet in planets:
         result.append(planet.user_planeta())
     return jsonify(result)
+
+@app.route("/planet/<int:id>", methods=["GET"])
+def get_oneplanet(id):
+    planeta = Planeta.query.get(id)
+    if planeta is not None:
+       return jsonify(planeta.user_planeta())
 
 @app.route('/favorito/list', methods=['GET'])
 def get_list_favorito():
