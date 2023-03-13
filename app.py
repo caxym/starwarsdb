@@ -81,9 +81,9 @@ def create_planet():
 @app.route('/favorito', methods=['POST'])
 def create_favorito():
     favorito = Favorito()
-    favorito.name_personajes = request.json.get('name_personajes')
-    favorito.name_vehiculos = request.json.get('name_vehiculos')
-    favorito.name_planetas = request.json.get('name_planetas')
+    favorito.name_personajes = request.json.get('personaje_id')
+    favorito.name_vehiculos = request.json.get('vehiculo_id')
+    favorito.name_planetas = request.json.get('planeta_id')
     favorito.user_email = request.json.get('user_email')
     
 
