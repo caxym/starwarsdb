@@ -92,6 +92,20 @@ def create_favorito():
 
     return "Favorito guardado"
 
+@app.route('/favorito/pj', methods=['POST'])
+def create_favorito_pj():
+    favorito = Favorito()
+    favorito.name_personajes = request.json.get('name_personajes')
+    favorito.name_vehiculos = request.json.get('name_vehiculos')
+    favorito.name_planetas = request.json.get('name_planetas')
+    favorito.user_email = request.json.get('user_email')
+    
+
+    db.session.add(favorito)
+    db.session.commit()
+
+    return "Favorito guardado"
+
 @app.route('/users/list', methods=['GET'])
 def get_list_user():
     users = User.query.all()

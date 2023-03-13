@@ -27,17 +27,17 @@ class User(db.Model):
 class Favorito(db.Model):
     __tablename__ = 'favorito'
     id = db.Column(db.Integer, primary_key=True)
-    name_personajes = db.Column(db.String(50),ForeignKey('personaje.name'))
-    name_vehiculos = db.Column(db.String(50),ForeignKey('vehiculo.name'))
-    name_planetas = db.Column(db.String(50),ForeignKey('planeta.name'))
-    user_email = db.Column(db.String(50),ForeignKey('user.email'))
+    personaje_id = db.Column(db.Integer,db.ForeignKey('personaje.id'))
+    vehiculo_id = db.Column(db.Integer,db.ForeignKey('vehiculo.id'))
+    planeta_id = db.Column(db.Integer,db.ForeignKey('planeta.id'))
+    user_email = db.Column(db.String(50),db.ForeignKey('user.email'))
 
     def user_favorite(self):
         return{
             'id': self.id,
-            'name_personajes': self.name_personajes,
-            'name_vehiculos': self.name_vehiculos,
-            'name_planetas': self.name_planetas
+            'personaje_id': self.personaje_id,
+            'vehiculo_id': self.vehiculo_id,
+            'planeta_id': self.planeta_id
         }
 
 class Personaje(db.Model):
